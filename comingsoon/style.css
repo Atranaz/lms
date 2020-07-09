@@ -1,0 +1,29 @@
+body {
+  margin: 0;
+  font: normal 75% Arial, Helvetica, sans-serif;
+}
+canvas {
+  display: block;
+  vertical-align: bottom;
+} 
+#particles-js {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #fefefe;
+  background-image: url("org-logo-01.png");
+  background-repeat: no-repeat;
+  background-size: 20%;
+  background-position: 50% 50%;
+   transition: 2s ease all;
+} 
+#particles-js:hover {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #fefefe;
+  background-image: url("hover-logo.png");
+  background-repeat: no-repeat;
+  background-size: 20%;
+  background-position: 50% 50%;
+}
