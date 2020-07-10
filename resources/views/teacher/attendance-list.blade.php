@@ -37,7 +37,7 @@
                                             ON
                                                 
                                                 @break
-                                            @case(0)
+                                            @case(2)
                                                 OFF
                                                 @break
                                             @default
@@ -46,7 +46,7 @@
                                         </td>
                                     <td>
                                         @if ($data[$i]->status)
-                                            
+                                            Attendance marked
                                         @else
                                         <a href="{{url('attendance')}}/{{$data[$i]->id}}?status=on">ON</a> | 
                                         <a href="{{url('attendance')}}/{{$data[$i]->id}}?status=off">OFF</a>

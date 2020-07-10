@@ -155,22 +155,43 @@ class TeacherController extends Controller
     public function attendanceShow()
     {
         $teachers = DB::table('teachers')
-            ->leftJoin('attendances', 'teachers.id', '=', 'attendances.teacher_id')
-            ->select('teachers.*', 'attendances.status')
-            // ->where('attendances.created_at', '>=', \Carbon\Carbon::today())
+            ->select('teachers.*')
             ->get();
 
+        $t_length = count($teachers);
+        for ($i = 0; $i < $t_length; $i++) {
+            $a_status = $this->checkdailyAttendance($teachers[$i]->id);
+            $teachers[$i]->status = $a_status;
+        }
+
         return view('teacher.attendance-list', ['data' => $teachers]);
+    }
+
+    public function checkdailyAttendance($teacher_id)
+    {
+        $status_arr = DB::table('attendances')
+            ->select('status')
+            ->whereRaw('Date(created_at) = CURDATE()')
+            ->where('teacher_id', '=', $teacher_id)
+            ->get();
+        if (isset($status_arr) > 0 && count($status_arr) > 0) {
+            $status = $status_arr[0]->status;
+        } else {
+            $status = 0;
+        }
+        return $status;
     }
 
     public function updateAttendance(Request $request, $id)
     {
         $check_count = count($request->all());
+
         if ($check_count == null && $id == null) {
             return abort(404);
         }
+        //CHECK IF ALREADY RECORD AVAILABLE WITH TODAY DATE SEND MESSAGE IT ALREADY MARKED
         if ($request->status == 'off') {
-            $status = 0;
+            $status = 2;
         } else {
             $status = 1;
         }
